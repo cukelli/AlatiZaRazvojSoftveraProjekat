@@ -1,0 +1,17 @@
+{
+	"ulid": "01H1XBJN7PRZHXTR2T6NYSE0M2",
+	"minTime": 1685642796054,
+	"maxTime": 1685649600000,
+	"stats": {
+		"numSamples": 6819,
+		"numSeries": 50,
+		"numChunks": 100
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01H1XBJN7PRZHXTR2T6NYSE0M2"
+		]
+	},
+	"version": 1
+}

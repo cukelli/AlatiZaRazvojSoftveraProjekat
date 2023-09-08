@@ -1,0 +1,271 @@
+swagger: "2.0"
+basePath: /
+schemes:
+  - http
+info:
+  description: 'Title: Configuration API'
+  title: Configuration API
+  version: 0.0.1
+paths:
+  /configurations:
+    post:
+      description: Add new configuration
+      operationId: createConfigration
+      parameters:
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Config'
+          x-go-name: Body
+      responses:
+        "201":
+          $ref: '#/responses/ResponsePost'
+        "400":
+          $ref: '#/responses/ErrorResponse'
+        "500":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - configuration
+  /configurations/{id}/{version}:
+    get:
+      description: Get configuration by ID
+      operationId: getConfigurationById
+      parameters:
+        - description: Configuration ID
+          in: path
+          name: id
+          required: true
+          type: string
+          x-go-name: Id
+        - name: version
+          in: path
+          description: Configuration Version
+          required: true
+          type: string
+      responses:
+        "200":
+          $ref: '#/responses/ResponsePost'
+        "404":
+          $ref: '#/responses/ErrorResponse'
+        "500":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - configuration
+    delete:
+      description: Delete configuration
+      operationId: deleteConfiguration
+      parameters:
+        - description: Configuration ID
+          in: path
+          name: id
+          required: true
+          type: string
+          x-go-name: Id
+        - name: version
+          in: path
+          description: Configuration Version
+          required: true
+          type: string
+      responses:
+        "204":
+          $ref: '#/responses/NoContentResponse'
+        "404":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - configuration
+
+  /group:
+    post:
+      description: Add new configuration group
+      operationId: createConfigrationGroup
+      parameters:
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Config'
+          x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/ResponsePost'
+        "400":
+          $ref: '#/responses/ErrorResponse'
+        "500":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - configuration group
+  /group/{id}/{version}:
+    get:
+      description: Get group by ID
+      operationId: getGroupById
+      parameters:
+        - description: Group ID
+          in: path
+          name: id
+          required: true
+          type: string
+          x-go-name: Id
+        - name: version
+          in: path
+          description: Configuration Group Version
+          required: true
+          type: string
+      responses:
+        "200":
+          $ref: '#/responses/ResponsePost'
+        "404":
+          $ref: '#/responses/ErrorResponse'
+        "500":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - configuration group
+    delete:
+      description: Delete group
+      operationId: deleteGroup
+      parameters:
+        - description: Group ID
+          in: path
+          name: id
+          required: true
+          type: string
+          x-go-name: Id
+        - name: version
+          in: path
+          description: Configuration Group Version
+          required: true
+          type: string
+      responses:
+        "204":
+          $ref: '#/responses/NoContentResponse'
+        "404":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - configuration group
+
+  /group/{id}/{version}/extend:
+    post:
+      description: Extend configuration group
+      operationId: extendConfigurationGroup
+      parameters:
+        - description: Group ID
+          in: path
+          name: id
+          required: true
+          type: string
+          x-go-name: Id
+        - name: version
+          in: path
+          description: Configuration Group Version
+          required: true
+          type: string
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Config'
+          x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/ResponsePost'
+        "400":
+          $ref: '#/responses/ErrorResponse'
+        "404":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - extend configuration group
+  /group/{id}/{version}/{labels}:
+    get:
+      description: Get configuration groups by labels
+      operationId: getConfigurationGroupsByLabels
+      parameters:
+        - description: Group ID
+          in: path
+          name: id
+          required: true
+          type: string
+          x-go-name: Id
+        - name: version
+          in: path
+          description: Configuration Group Version
+          required: true
+          type: string
+        - name: labels
+          in: path
+          description: Configuration Group Labels
+          required: true
+          type: string
+      responses:
+        "200":
+          $ref: '#/responses/ResponsePost'
+        "404":
+          $ref: '#/responses/ErrorResponse'
+        "500":
+          $ref: '#/responses/ErrorResponse'
+      tags:
+        - labels
+produces:
+  - application/json
+responses:
+  ErrorResponse:
+    description: ""
+    headers:
+      message:
+        description: |-
+          Message of the error
+          in: string
+        type: string
+      status:
+        description: |-
+          Error status code
+          in: int64
+        format: int64
+        type: integer
+  NoContentResponse:
+    description: ""
+  ResponsePost:
+    description: ""
+    headers:
+      id:
+        description: |-
+          Id of the post
+          in: string
+        type: string
+      tags:
+        description: |-
+          List of tags of the post
+          in: []string
+        items:
+          type: string
+        type: array
+      text:
+        description: |-
+          Text content of the post
+          in: string
+        type: string
+      title:
+        description: |-
+          Title of the post
+          in: string
+        type: string
+definitions:
+  Config:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      entries:
+        type: object
+        additionalProperties:
+          type: string
+      group_id:
+        type: string
+      version:
+        type: string
+      labels:
+        type: string
